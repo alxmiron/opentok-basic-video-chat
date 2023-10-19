@@ -2,7 +2,8 @@
   "scripts": {
     "start": "vite dev",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "vercel"
   },
   "devDependencies": {
     "vite": "^4.5.0"
