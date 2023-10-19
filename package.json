@@ -2,8 +2,9 @@
     "scripts": {
         "start": "vite dev",
         "build": "vite build",
-        "preview": "vite preview",
-        "deploy": "vercel"
+        "preview:local": "vite preview",
+        "preview:stage": "vercel",
+        "deploy": "vercel --prod"
     },
     "devDependencies": {
         "eslint": "^8.51.0",
