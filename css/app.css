@@ -34,3 +34,12 @@ html {
     border: 3px solid white;
     border-radius: 3px;
 }
+.publisherControls {
+    position: absolute;
+    z-index: 20;
+    left: 390px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

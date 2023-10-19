@@ -1,8 +1,15 @@
-import { useCallback } from "preact/hooks";
+import { useCallback, useEffect, useState } from "preact/hooks";
 import { handleError } from "../errors";
 
+let publisher;
+
 export const usePublisher = () => {
+    const [videoOn, setVideoToggle] = useState(false);
+    const [audioOn, setAudioToggle] = useState(false);
+
     const getPublisher = useCallback(() => {
+        if (publisher) return publisher;
+
         const publisherOptions = {
             insertMode: "append",
             width: "100%",
@@ -11,10 +18,33 @@ export const usePublisher = () => {
             publishAudio: false,
         };
 
-        return OT.initPublisher("publisher", publisherOptions, handleError);
+        publisher = OT.initPublisher(
+            "publisher",
+            publisherOptions,
+            handleError,
+        );
+
+        return publisher;
     }, []);
 
+    useEffect(() => {
+        if (publisher) {
+            publisher.publishVideo(videoOn);
+        }
+    }, [videoOn, publisher]);
+
+    useEffect(() => {
+        if (publisher) {
+            publisher.publishAudio(audioOn);
+        }
+    }, [audioOn, publisher]);
+
     return {
+        publisher,
         getPublisher,
+        videoOn,
+        setVideoToggle,
+        audioOn,
+        setAudioToggle,
     };
 };

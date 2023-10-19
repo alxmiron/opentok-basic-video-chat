@@ -4,6 +4,7 @@ import { useSession } from "../hooks/useSession";
 import { usePublisher } from "../hooks/usePublisher";
 import { handleError } from "../errors";
 import { Subscribers } from "./Subscribers";
+import { Controls } from "./Controls";
 
 const token = TOKEN;
 
@@ -29,6 +30,7 @@ export const App = () => {
         <div id="videos">
             <Subscribers />
             <div id="publisher"></div>
+            <Controls />
         </div>
     );
 };
