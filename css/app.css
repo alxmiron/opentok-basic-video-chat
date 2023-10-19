@@ -1,5 +1,11 @@
-body, html {
+body,
+html {
     background-color: gray;
+    height: 100%;
+}
+#app {
+    position: relative;
+    width: 100%;
     height: 100%;
 }
 #videos {
@@ -9,7 +15,7 @@ body, html {
     margin-left: auto;
     margin-right: auto;
 }
-.subscriber {
+#subscriber {
     position: absolute;
     left: 0;
     top: 0;

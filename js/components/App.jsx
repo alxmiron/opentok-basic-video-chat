@@ -9,25 +9,35 @@ const sessionId = SESSION_ID;
 const token = TOKEN;
 
 export const App = () => {
-  const session = useSession({ apiKey, sessionId });
-  const publisher = usePublisher();
-
-  useEffect(() => {
-    // Connect to the session
-    session.connect(token, (error) => {
-      if (error) {
-        handleError(error);
-      } else {
-        // If the connection is successful, publish the publisher to the session
-        session.publish(publisher, handleError);
-      }
+    const { session, subscribeSessionEvents } = useSession({
+        apiKey,
+        sessionId,
     });
-  }, [session]);
+    const { getPublisher } = usePublisher();
 
-  return (
-    <div id="videos">
-      <div id="subscriber"></div>
-      <div id="publisher"></div>
-    </div>
-  );
+    console.log("- render App");
+
+    useEffect(() => {
+        subscribeSessionEvents(session);
+        const publisher = getPublisher();
+
+        console.log("session effect");
+
+        // Connect to the session
+        session.connect(token, (error) => {
+            if (error) {
+                handleError(error);
+            } else {
+                // If the connection is successful, publish the publisher to the session
+                session.publish(publisher, handleError);
+            }
+        });
+    }, [session]);
+
+    return (
+        <div id="videos">
+            <div id="subscriber"></div>
+            <div id="publisher"></div>
+        </div>
+    );
 };
