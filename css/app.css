@@ -10,6 +10,7 @@ html {
     width: 100%;
     height: 100%;
 }
+
 .subscribers {
     position: absolute;
     left: 0;
@@ -20,10 +21,21 @@ html {
     display: grid;
     gap: 16px;
 }
+.subscribers.ribbon {
+    top: 10px;
+    left: 11px;
+    width: 364px;
+    height: calc(100% - 272px);
+    overflow: auto;
+}
+.subscribers.ribbon .subscriber {
+    min-height: 240px;
+}
 .subscriber {
     width: 100%;
     height: 100%;
 }
+
 #publisher {
     position: absolute;
     width: 360px;
@@ -42,4 +54,21 @@ html {
     display: flex;
     flex-direction: row;
     gap: 10px;
+}
+
+.workspace {
+    position: absolute;
+    z-index: 10;
+    left: 384px;
+    bottom: 10px;
+    width: calc(100% - 392px);
+    height: calc(100% - 20px);
+}
+
+.workspace.hidden {
+    display: none;
+}
+.workspace iframe {
+    width: 100%;
+    height: 100%;
 }

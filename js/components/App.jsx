@@ -5,12 +5,14 @@ import { usePublisher } from "../hooks/usePublisher";
 import { handleError } from "../errors";
 import { Subscribers } from "./Subscribers";
 import { Controls } from "./Controls";
+import { Workspace } from "./Workspace";
 
 const token = TOKEN;
 
 export const App = () => {
     const { session } = useSession();
     const { getPublisher } = usePublisher();
+    const layoutType = "ribbon";
 
     useEffect(() => {
         const publisher = getPublisher();
@@ -28,7 +30,8 @@ export const App = () => {
 
     return (
         <div id="videos">
-            <Subscribers />
+            <Subscribers layoutType={layoutType} />
+            <Workspace layoutType={layoutType} />
             <div id="publisher"></div>
             <Controls />
         </div>

@@ -1,17 +1,13 @@
 import { useSubscribers } from "../hooks/useSubscribers";
 
-export const Subscribers = () => {
+export const Subscribers = ({ layoutType }) => {
     const { subscribers } = useSubscribers();
     const cellsAmount = Object.keys(subscribers).length;
-    const { cols, rows } = getGridParams(cellsAmount);
 
     return (
         <div
-            className="subscribers"
-            style={{
-                gridTemplateRows: `repeat(${rows}, 1fr)`,
-                gridTemplateColumns: `repeat(${cols}, 1fr)`,
-            }}
+            className={`subscribers ${layoutType}`}
+            style={getGridStyle(cellsAmount, layoutType)}
         >
             {Object.keys(subscribers).map((id) => (
                 <div key={id} id={`subs-${id}`} className="subscriber"></div>
@@ -20,7 +16,27 @@ export const Subscribers = () => {
     );
 };
 
-const getGridParams = (cellsAmount) => {
+const getGridStyle = (cellsAmount, layoutType) => {
+    const { cols, rows } = getGridParams(cellsAmount, layoutType);
+
+    if (layoutType === "ribbon") {
+        return {
+            gridTemplateRows: `repeat(${rows}, 1fr)`,
+            gridTemplateColumns: `repeat(${cols}, 1fr)`,
+        };
+    }
+
+    return {
+        gridTemplateRows: `repeat(${rows}, 1fr)`,
+        gridTemplateColumns: `repeat(${cols}, 1fr)`,
+    };
+};
+
+const getGridParams = (cellsAmount, layoutType) => {
+    if (layoutType === "ribbon") {
+        return { cols: 1, rows: cellsAmount };
+    }
+
     const maxCols = 5;
     const maxRows = 3;
 
