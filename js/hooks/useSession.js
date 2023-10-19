@@ -1,39 +1,25 @@
-import { useCallback, useMemo } from "preact/hooks";
-import { handleError } from "../errors";
+import { useMemo } from "preact/hooks";
+import { API_KEY, SESSION_ID } from "../config";
 
-export const useSession = ({ apiKey, sessionId }) => {
+let sessionCached;
+
+export const useSession = () => {
     const session = useMemo(() => {
-        const session = OT.initSession(apiKey, sessionId);
+        if (sessionCached) return sessionCached;
 
-        return session;
-    }, []);
+        sessionCached = OT.initSession(API_KEY, SESSION_ID);
 
-    const subscribeSessionEvents = useCallback((session) => {
-        // Subscribe to a newly created stream
-        session.on("streamCreated", (event) => {
-            const subscriberOptions = {
-                insertMode: "append",
-                width: "100%",
-                height: "100%",
-            };
-            session.subscribe(
-                event.stream,
-                "subscriber",
-                subscriberOptions,
-                handleError,
-            );
-        });
-
-        session.on("sessionDisconnected", (event) => {
+        sessionCached.on("sessionDisconnected", (event) => {
             console.log(
                 "You were disconnected from the session.",
                 event.reason,
             );
         });
+
+        return sessionCached;
     }, []);
 
     return {
         session,
-        subscribeSessionEvents,
     };
 };

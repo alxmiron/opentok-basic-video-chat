@@ -7,6 +7,8 @@ export const usePublisher = () => {
             insertMode: "append",
             width: "100%",
             height: "100%",
+            publishVideo: false,
+            publishAudio: false,
         };
 
         return OT.initPublisher("publisher", publisherOptions, handleError);

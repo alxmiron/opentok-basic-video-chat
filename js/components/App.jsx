@@ -1,27 +1,18 @@
 import { useEffect } from "preact/hooks";
-import { API_KEY, TOKEN, SESSION_ID } from "../config";
+import { TOKEN } from "../config";
 import { useSession } from "../hooks/useSession";
 import { usePublisher } from "../hooks/usePublisher";
 import { handleError } from "../errors";
+import { Subscribers } from "./Subscribers";
 
-const apiKey = API_KEY;
-const sessionId = SESSION_ID;
 const token = TOKEN;
 
 export const App = () => {
-    const { session, subscribeSessionEvents } = useSession({
-        apiKey,
-        sessionId,
-    });
+    const { session } = useSession();
     const { getPublisher } = usePublisher();
 
-    console.log("- render App");
-
     useEffect(() => {
-        subscribeSessionEvents(session);
         const publisher = getPublisher();
-
-        console.log("session effect");
 
         // Connect to the session
         session.connect(token, (error) => {
@@ -36,7 +27,7 @@ export const App = () => {
 
     return (
         <div id="videos">
-            <div id="subscriber"></div>
+            <Subscribers />
             <div id="publisher"></div>
         </div>
     );
