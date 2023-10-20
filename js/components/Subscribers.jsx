@@ -1,7 +1,4 @@
-import { useSubscribers } from "../hooks/useSubscribers";
-
-export const Subscribers = ({ layoutType }) => {
-    const { subscribers } = useSubscribers();
+export const Subscribers = ({ subscribers, layoutType }) => {
     const cellsAmount = Object.keys(subscribers).length;
 
     return (

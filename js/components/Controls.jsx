@@ -1,8 +1,12 @@
-import { usePublisher } from "../hooks/usePublisher";
-
-export const Controls = () => {
-    const { videoOn, audioOn, setAudioToggle, setVideoToggle } = usePublisher();
-
+export const Controls = ({
+    videoOn,
+    audioOn,
+    setAudioToggle,
+    setVideoToggle,
+    screenOn,
+    setScreenSharing,
+    screenDisabled,
+}) => {
     return (
         <div className="publisherControls">
             <button
@@ -16,6 +20,12 @@ export const Controls = () => {
                 style={{ backgroundColor: audioOn ? "red" : undefined }}
             >
                 Audio
+            </button>
+            <button
+                onClick={() => setScreenSharing(!screenOn)}
+                disabled={screenDisabled}
+            >
+                {screenOn ? "Stop sharing" : "Share screen"}
             </button>
         </div>
     );

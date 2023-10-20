@@ -20,19 +20,24 @@ export const useSubscribers = () => {
         );
         setSubscribers((prevSubscribers) => ({
             ...prevSubscribers,
-            [id]: { subscriber },
+            [id]: { ...prevSubscribers[id], subscriber, rendered: true },
         }));
     };
 
     useEffect(() => {
         session.on("streamCreated", (event) => {
+            if (event.stream.videoType === "screen") return;
             setSubscribers((prevSubscribers) => ({
                 ...prevSubscribers,
-                [event.stream.streamId]: { stream: event.stream },
+                [event.stream.streamId]: {
+                    stream: event.stream,
+                    rendered: false,
+                },
             }));
         });
 
         session.on("streamDestroyed", (event) => {
+            if (event.stream.videoType === "screen") return;
             setSubscribers((prevSubscribers) =>
                 Object.keys(prevSubscribers).reduce((acc, key) => {
                     if (key !== event.stream.streamId) {
@@ -45,12 +50,14 @@ export const useSubscribers = () => {
     }, [session]);
 
     useEffect(() => {
-        Object.entries(subscribers).forEach(([id, { stream }]) => {
-            if (stream) {
+        Object.entries(subscribers).forEach(([id, { stream, rendered }]) => {
+            if (!rendered) {
                 renderSubscriber(stream, session, id);
             }
         });
     }, [subscribers]);
 
-    return { subscribers };
+    return {
+        subscribers,
+    };
 };

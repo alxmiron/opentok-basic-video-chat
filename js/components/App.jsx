@@ -2,6 +2,8 @@ import { useEffect } from "preact/hooks";
 import { TOKEN } from "../config";
 import { useSession } from "../hooks/useSession";
 import { usePublisher } from "../hooks/usePublisher";
+import { useSubscribers } from "../hooks/useSubscribers";
+import { useScreenShare } from "../hooks/useScreenShare";
 import { handleError } from "../errors";
 import { Subscribers } from "./Subscribers";
 import { Controls } from "./Controls";
@@ -11,8 +13,14 @@ const token = TOKEN;
 
 export const App = () => {
     const { session } = useSession();
-    const { getPublisher } = usePublisher();
-    const layoutType = "ribbon";
+    const { getPublisher, videoOn, audioOn, setAudioToggle, setVideoToggle } =
+        usePublisher();
+    const { subscribers } = useSubscribers();
+    const { isScreenSharing, isScreenViewing, setScreenSharing } =
+        useScreenShare();
+
+    const layoutType = isScreenViewing ? "ribbon" : "grid";
+    const isIframeOn = false;
 
     useEffect(() => {
         const publisher = getPublisher();
@@ -30,10 +38,23 @@ export const App = () => {
 
     return (
         <div id="videos">
-            <Subscribers layoutType={layoutType} />
-            <Workspace layoutType={layoutType} />
+            <Subscribers subscribers={subscribers} layoutType={layoutType} />
+            <Workspace
+                layoutType={layoutType}
+                isScreenViewing={isScreenViewing}
+                isIframeOn={isIframeOn}
+            />
             <div id="publisher"></div>
-            <Controls />
+            {isScreenSharing && <div id="screen-preview"></div>}
+            <Controls
+                videoOn={videoOn}
+                audioOn={audioOn}
+                setAudioToggle={setAudioToggle}
+                setVideoToggle={setVideoToggle}
+                screenOn={isScreenSharing}
+                screenDisabled={isScreenViewing}
+                setScreenSharing={setScreenSharing}
+            />
         </div>
     );
 };
