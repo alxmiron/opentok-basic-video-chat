@@ -3,6 +3,7 @@ import { TOKEN } from "../config";
 import { useSession } from "../hooks/useSession";
 import { usePublisher } from "../hooks/usePublisher";
 import { useSubscribers } from "../hooks/useSubscribers";
+import { useShareMaterials } from "../hooks/useShareMaterials";
 import { useScreenShare } from "../hooks/useScreenShare";
 import { handleError } from "../errors";
 import { Subscribers } from "./Subscribers";
@@ -18,9 +19,12 @@ export const App = () => {
     const { subscribers } = useSubscribers();
     const { isScreenSharing, isScreenViewing, setScreenSharing } =
         useScreenShare();
+    const { isMaterialsSharing, isMaterialsViewing, setShareMaterials } =
+        useShareMaterials();
 
-    const layoutType = isScreenViewing ? "ribbon" : "grid";
-    const isIframeOn = false;
+    const isMaterialsDisplayed = isMaterialsSharing || isMaterialsViewing;
+    const layoutType =
+        isScreenViewing || isMaterialsDisplayed ? "ribbon" : "grid";
 
     useEffect(() => {
         const publisher = getPublisher();
@@ -42,7 +46,7 @@ export const App = () => {
             <Workspace
                 layoutType={layoutType}
                 isScreenViewing={isScreenViewing}
-                isIframeOn={isIframeOn}
+                isMaterialsViewing={isMaterialsDisplayed}
             />
             <div id="publisher"></div>
             {isScreenSharing && <div id="screen-preview"></div>}
@@ -54,6 +58,9 @@ export const App = () => {
                 screenOn={isScreenSharing}
                 screenDisabled={isScreenViewing}
                 setScreenSharing={setScreenSharing}
+                materialsOn={isMaterialsSharing}
+                setShareMaterials={setShareMaterials}
+                materialsDisabled={isMaterialsViewing}
             />
         </div>
     );

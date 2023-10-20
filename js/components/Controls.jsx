@@ -6,6 +6,9 @@ export const Controls = ({
     screenOn,
     setScreenSharing,
     screenDisabled,
+    materialsOn,
+    setShareMaterials,
+    materialsDisabled,
 }) => {
     return (
         <div className="publisherControls">
@@ -24,8 +27,16 @@ export const Controls = ({
             <button
                 onClick={() => setScreenSharing(!screenOn)}
                 disabled={screenDisabled}
+                style={{ backgroundColor: screenOn ? "red" : undefined }}
             >
                 {screenOn ? "Stop sharing" : "Share screen"}
+            </button>
+            <button
+                onClick={() => setShareMaterials(!materialsOn)}
+                disabled={materialsDisabled}
+                style={{ backgroundColor: materialsOn ? "red" : undefined }}
+            >
+                {materialsOn ? "Hide materials" : "Show materials"}
             </button>
         </div>
     );
