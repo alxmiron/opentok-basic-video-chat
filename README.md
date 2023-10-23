@@ -1,5 +1,5 @@
 OpenTok.js Basic Sample
-=======================
+========================
 
 This sample application shows how to connect to an OpenTok session, publish a stream,
 subscribe to a stream, and mute audio.
