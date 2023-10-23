@@ -10,8 +10,6 @@ import { Subscribers } from "./Subscribers";
 import { Controls } from "./Controls";
 import { Workspace } from "./Workspace";
 
-const token = TOKEN;
-
 export const App = () => {
     const { session } = useSession();
     const { getPublisher, videoOn, audioOn, setAudioToggle, setVideoToggle } =
@@ -30,7 +28,7 @@ export const App = () => {
         const publisher = getPublisher();
 
         // Connect to the session
-        session.connect(token, (error) => {
+        session.connect(TOKEN, (error) => {
             if (error) {
                 handleError(error);
             } else {
