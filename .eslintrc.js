@@ -20,6 +20,7 @@ module.exports = {
         sourceType: "module",
     },
     plugins: ["react"],
+    ignorePatterns: ['js/noiseReduction/lib/**/*.js'],
     rules: {
         "react/react-in-jsx-scope": 0,
         "react/prop-types": 0,

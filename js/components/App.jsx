@@ -5,6 +5,7 @@ import { usePublisher } from "../hooks/usePublisher";
 import { useSubscribers } from "../hooks/useSubscribers";
 import { useShareMaterials } from "../hooks/useShareMaterials";
 import { useScreenShare } from "../hooks/useScreenShare";
+import { useNoiseReduction } from "../hooks/useNoiseReduction";
 import { handleError } from "../errors";
 import { Subscribers } from "./Subscribers";
 import { Controls } from "./Controls";
@@ -19,13 +20,14 @@ export const App = () => {
         useScreenShare();
     const { isMaterialsSharing, isMaterialsViewing, setShareMaterials } =
         useShareMaterials();
+    const { noiseReductionOn, setNoiseReduction } = useNoiseReduction();
 
     const isMaterialsDisplayed = isMaterialsSharing || isMaterialsViewing;
     const layoutType =
         isScreenViewing || isMaterialsDisplayed ? "ribbon" : "grid";
 
-    useEffect(() => {
-        const publisher = getPublisher();
+    useEffect(async () => {
+        const publisher = await getPublisher();
 
         // Connect to the session
         session.connect(TOKEN, (error) => {
@@ -59,6 +61,8 @@ export const App = () => {
                 materialsOn={isMaterialsSharing}
                 setShareMaterials={setShareMaterials}
                 materialsDisabled={isMaterialsViewing}
+                noiseReductionOn={noiseReductionOn}
+                setNoiseReduction={setNoiseReduction}
             />
         </div>
     );

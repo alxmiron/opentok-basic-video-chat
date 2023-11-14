@@ -9,6 +9,8 @@ export const Controls = ({
     materialsOn,
     setShareMaterials,
     materialsDisabled,
+    noiseReductionOn,
+    setNoiseReduction,
 }) => {
     return (
         <div className="publisherControls">
@@ -37,6 +39,12 @@ export const Controls = ({
                 style={{ backgroundColor: materialsOn ? "red" : undefined }}
             >
                 {materialsOn ? "Hide materials" : "Show materials"}
+            </button>
+            <button
+                onClick={() => setNoiseReduction(!noiseReductionOn)}
+                style={{ backgroundColor: noiseReductionOn ? "red" : undefined }}
+            >
+                Noise suppression: {noiseReductionOn ? 'ON' : 'OFF'}
             </button>
         </div>
     );
